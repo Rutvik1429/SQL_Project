@@ -23,12 +23,12 @@ This project aims to simulate data-driven decision-making tasks that a data anal
 
 Through this SQL-based Netflix data analysis project, I achieved the following:
 
-1.Identified content distribution trends by type, genre, country, and release year.
+1. Identified content distribution trends by type, genre, country, and release year.
 
-2.Used window functions to find the longest movie and rank actors by appearances.
+2. Used window functions to find the longest movie and rank actors by appearances.
 
-3.Applied subqueries and filters to analyze content with specific keywords like "Kill" and "Violence".
+3. Applied subqueries and filters to analyze content with specific keywords like "Kill" and "Violence".
 
-4.Employed CTEs for reusable logic in complex queries, such as calculating average yearly content for India or counting movies by specific actors and directors.
+4. Employed CTEs for reusable logic in complex queries, such as calculating average yearly content for India or counting movies by specific actors and directors.
 
-5.Extracted actionable insights like the most common rating, top-producing countries, and multi-season TV shows.
+5. Extracted actionable insights like the most common rating, top-producing countries, and multi-season TV shows.
