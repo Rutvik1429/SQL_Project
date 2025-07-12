@@ -9,3 +9,12 @@ This repository contains some SQL project for data analyst.
 
 The objective of this project is to analyze the Netflix dataset using advanced SQL techniques to extract meaningful insights about content trends, user preferences, and platform distribution. The project leverages SQL subqueries, Common Table Expressions (CTEs), and window functions to perform in-depth data analysis. This includes identifying the most frequent genres, understanding the release trends over the years, examining country-wise content distribution, and ranking shows based on duration and popularity.
 
+To solve these problems efficiently, I used a combination of:
+
+Subqueries for filtering and conditional analysis,
+
+Common Table Expressions (CTEs) for improving query modularity and readability,
+
+Window Functions to rank, group, and aggregate data dynamically across partitions.
+
+This project aims to simulate data-driven decision-making tasks that a data analyst at Netflix might face, enhancing my SQL proficiency and business insight.
