@@ -32,3 +32,16 @@ Through this SQL-based Netflix data analysis project, I achieved the following:
 4. Employed CTEs for reusable logic in complex queries, such as calculating average yearly content for India or counting movies by specific actors and directors.
 
 5. Extracted actionable insights like the most common rating, top-producing countries, and multi-season TV shows.
+
+Each problem is explained with:
+- **Problem Statement** 📝  
+- **SQL Query** 💻  
+- **Expected Output/Insight** 📈  
+
+---
+
+## 1️⃣ Count the Number of Movies vs TV Shows
+```sql
+SELECT type, COUNT(*) 
+FROM netflix 
+GROUP BY type;
