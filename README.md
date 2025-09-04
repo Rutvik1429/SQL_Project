@@ -74,3 +74,136 @@ WHERE type = 'Movie'
 ```
 ![Netflix Q3](https://github.com/Rutvik1429/SQL_Project/blob/main/Netflix_Analysis/Output%20Images/Netflix%20Q3.png)
 
+## 4️⃣ Find the Top 5 Countries with the Most Content
+```sql
+SELECT * 
+FROM (
+  SELECT UNNEST(STRING_TO_ARRAY(country,',')) AS country,
+         COUNT(*) AS count_country 
+  FROM netflix 
+  GROUP BY country
+) AS t1
+WHERE country IS NOT NULL
+ORDER BY count_country DESC
+LIMIT 5;
+```
+![Netflix Q4](https://github.com/Rutvik1429/SQL_Project/blob/main/Netflix_Analysis/Output%20Images/Netflix%20Q4.png)
+
+## 5️⃣ Identify the Longest Movie
+```sql
+SELECT * 
+FROM netflix 
+WHERE type = 'Movie' 
+  AND duration IS NOT NULL 
+ORDER BY SPLIT_PART(duration,' ',1)::int DESC;
+```
+![Netflix Q5](https://github.com/Rutvik1429/SQL_Project/blob/main/Netflix_Analysis/Output%20Images/Netflix%20Q5.png)
+
+## 6️⃣ Find Content Added in the Last 5 Years
+```sql
+SELECT * 
+FROM netflix 
+WHERE TO_DATE(date_added,'Month DD,YYYY') >= CURRENT_DATE - INTERVAL '5 year';
+```
+![Netflix Q6](https://github.com/Rutvik1429/SQL_Project/blob/main/Netflix_Analysis/Output%20Images/Netflix%20Q6.png)
+
+## 7️⃣ Find All Movies/TV Shows by Director 'Rajiv Chilaka'
+```sql
+SELECT * 
+FROM netflix 
+WHERE director LIKE '%Rajiv Chilaka%';
+```
+![Netflix Q7](https://github.com/Rutvik1429/SQL_Project/blob/main/Netflix_Analysis/Output%20Images/Netflix%20Q7.png)
+
+## 8️⃣ List All TV Shows with More Than 5 Seasons
+```sql
+SELECT * 
+FROM netflix 
+WHERE type = 'TV Show' 
+  AND SPLIT_PART(duration,' ',1)::int > 5;
+```
+![Netflix Q8](https://github.com/Rutvik1429/SQL_Project/blob/main/Netflix_Analysis/Output%20Images/Netflix%20Q8.png)
+
+## 9️⃣ Count the Number of Content Items in Each Genre
+```sql
+SELECT 
+    UNNEST(STRING_TO_ARRAY(listed_in, ',')) AS genre,
+    COUNT(*) AS total_content
+FROM netflix
+GROUP BY 1
+ORDER BY 2 DESC;
+```
+![Netflix Q9](https://github.com/Rutvik1429/SQL_Project/blob/main/Netflix_Analysis/Output%20Images/Netflix%20Q9.png)
+
+## 🔟 Average Content Released Per Year in India
+```sql
+SELECT 
+    country,
+    release_year,
+    COUNT(show_id) AS total_release,
+    ROUND(
+        COUNT(show_id)::numeric /
+        (SELECT COUNT(show_id) FROM netflix WHERE country = 'India')::numeric * 100, 2
+    ) AS avg_release
+FROM netflix
+WHERE country = 'India'
+GROUP BY country, release_year
+ORDER BY avg_release DESC
+LIMIT 5;
+```
+![Netflix Q10](https://github.com/Rutvik1429/SQL_Project/blob/main/Netflix_Analysis/Output%20Images/Netflix%20Q10.png)
+
+## 1️⃣1️⃣ List All Documentaries
+```sql
+SELECT * 
+FROM netflix 
+WHERE listed_in ILIKE '%documentaries%';
+```
+![Netflix Q11](https://github.com/Rutvik1429/SQL_Project/blob/main/Netflix_Analysis/Output%20Images/Netflix%20Q11.png)
+
+## 1️⃣2️⃣ Find Content Without a Director
+```sql
+SELECT * 
+FROM netflix 
+WHERE director IS NULL;
+```
+![Netflix Q12](https://github.com/Rutvik1429/SQL_Project/blob/main/Netflix_Analysis/Output%20Images/Netflix%20Q12.png)
+
+## 1️⃣3️⃣ Movies with Actor 'Salman Khan' in the Last 10 Years
+```sql
+SELECT * 
+FROM netflix
+WHERE casts LIKE '%Salman Khan%'
+  AND release_year > EXTRACT(YEAR FROM CURRENT_DATE) - 10;
+```
+![Netflix Q13](https://github.com/Rutvik1429/SQL_Project/blob/main/Netflix_Analysis/Output%20Images/Netflix%20Q13.png)
+
+## 1️⃣4️⃣ Top 10 Actors in Indian Movies
+```sql
+SELECT 
+    UNNEST(STRING_TO_ARRAY(casts, ',')) AS actor,
+    COUNT(*)
+FROM netflix
+WHERE country = 'India'
+GROUP BY actor
+ORDER BY COUNT(*) DESC
+LIMIT 10;
+```
+![Netflix Q14](https://github.com/Rutvik1429/SQL_Project/blob/main/Netflix_Analysis/Output%20Images/Netflix%20Q14.png)
+
+## 1️⃣5️⃣ Categorize Content Based on 'Kill' and 'Violence'
+```sql
+SELECT 
+    category,
+    COUNT(*) AS content_count
+FROM (
+    SELECT 
+        CASE 
+            WHEN description ILIKE '%kill%' OR description ILIKE '%violence%' THEN 'Bad'
+            ELSE 'Good'
+        END AS category
+    FROM netflix
+) AS categorized_content
+GROUP BY category;
+```
+![Netflix Q15](https://github.com/Rutvik1429/SQL_Project/blob/main/Netflix_Analysis/Output%20Images/Netflix%20Q15.png)
