@@ -45,3 +45,7 @@ Each problem is explained with:
 SELECT type, COUNT(*) 
 FROM netflix 
 GROUP BY type;
+```
+![Netflix Q1]()
+
+
