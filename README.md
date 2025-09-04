@@ -38,8 +38,6 @@ Each problem is explained with:
 - **SQL Query** 💻  
 - **Expected Output/Insight** 📈  
 
----
-
 ## 1️⃣ Count the Number of Movies vs TV Shows
 ```sql
 SELECT type, COUNT(*) 
@@ -48,4 +46,31 @@ GROUP BY type;
 ```
 ![Netflix Q1](https://github.com/Rutvik1429/SQL_Project/blob/main/Netflix_Analysis/Output%20Images/Netflix%20Q1.png)
 
+## 2️⃣ Find the Most Common Rating for Movies and TV Shows
+```sql
+WITH totalcount AS (
+    SELECT type, rating, COUNT(*) AS total_num
+    FROM netflix
+    GROUP BY 1,2
+    ORDER BY total_num DESC
+),
+rank_count AS (
+    SELECT type, rating, total_num,
+           RANK() OVER(PARTITION BY type ORDER BY total_num DESC) AS rank_num
+    FROM totalcount
+)
+SELECT type, rating 
+FROM rank_count
+WHERE rank_num < 2;
+```
+![Netflix Q2](https://github.com/Rutvik1429/SQL_Project/blob/main/Netflix_Analysis/Output%20Images/Netflix%20Q2.png)
+
+## 3️⃣ List All Movies Released in 2020
+```sql
+SELECT * 
+FROM netflix 
+WHERE type = 'Movie' 
+  AND release_year = 2020;
+```
+![Netflix Q3](https://github.com/Rutvik1429/SQL_Project/blob/main/Netflix_Analysis/Output%20Images/Netflix%20Q3.png)
 
