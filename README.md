@@ -46,6 +46,6 @@ SELECT type, COUNT(*)
 FROM netflix 
 GROUP BY type;
 ```
-![Netflix Q1]()
+![Netflix Q1](https://github.com/Rutvik1429/SQL_Project/blob/main/Netflix_Analysis/Output%20Images/Netflix%20Q1.png)
 
 
