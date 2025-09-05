@@ -212,7 +212,7 @@ Through this SQL-based Netflix data analysis project, I achieved the following:
 ---
 ---
 
-# 🍕 Lapinose Pizza Sales Analysis (SQL Project)
+# 🍕 Lapinose Pizza Sales Analysis
 
 ![lapinoz_images](https://github.com/Rutvik1429/SQL_Project/blob/main/Lapinoz_pizzas_Analysis/lapinoz%20image.png)
 
