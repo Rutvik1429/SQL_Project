@@ -211,3 +211,46 @@ Through this SQL-based Netflix data analysis project, I achieved the following:
 
 ---
 ---
+
+# 🍕 Lapinose Pizza Sales Analysis (SQL Project)
+
+![lapinoz_images](https://github.com/Rutvik1429/SQL_Project/blob/main/Lapinoz_pizzas_Analysis/lapinoz%20image.png)
+
+## 📌 Project Summary
+This project analyzes **Lapinose Pizza sales data** using SQL to answer key business questions.  
+The dataset contains information about **orders, order details, pizzas, and pizza types**.  
+The main goal is to uncover insights that can help improve **sales strategies, menu optimization, and customer behavior understanding**.
+
+---
+
+## 🎯 Objectives
+- To calculate **total sales performance** (orders, revenue, average sales).  
+- To identify **top-selling pizzas** and categories.  
+- To analyze **customer order patterns** (by size, time, and quantity).  
+- To calculate **revenue contribution by category** and track **cumulative revenue growth**.  
+- To provide **data-driven insights** for business decision-making.  
+
+---
+
+## 📊 Key Insights
+1. **Total Orders** – Overall demand trends can be tracked.  
+2. **Total Revenue** – Clear view of overall business performance.  
+3. **Highest Priced Pizza** – Helps identify premium items.  
+4. **Most Common Pizza Size** – Customer preference in pizza sizing.  
+5. **Top 5 Pizza Types Ordered** – Core drivers of sales volume.  
+6. **Category-Wise Quantity Ordered** – Best performing categories.  
+7. **Order Distribution by Hour** – Peak ordering times for better staffing & marketing.  
+8. **Category-Wise Pizza Distribution** – Breadth of menu diversity.  
+9. **Average Pizzas per Day** – Operational planning metric.  
+10. **Top 3 Pizza Types by Revenue** – High-value pizzas.  
+11. **Revenue Contribution by Category** – Most profitable categories.  
+12. **Cumulative Revenue Over Time** – Growth tracking.  
+13. **Top 3 Pizza Types by Revenue per Category** – Deep dive into performance.  
+
+---
+
+## 🗂️ SQL Queries & Solutions
+
+### Q1. Retrieve the total number of orders placed
+```sql
+select count(*) as Number_of_Order from orders;
