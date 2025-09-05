@@ -251,6 +251,148 @@ The main goal is to uncover insights that can help improve **sales strategies, m
 
 ## 🗂️ SQL Queries & Solutions
 
-### Q1. Retrieve the total number of orders placed
+## Q1. Retrieve the total number of orders placed
 ```sql
 select count(*) as Number_of_Order from orders;
+```
+![lapizza q1](https://github.com/Rutvik1429/SQL_Project/blob/main/Lapinoz_pizzas_Analysis/Output%20images/lapizza%20q1.png)
+
+## Q2. Calculate the total revenue generated from pizza sales
+```sql
+select round(sum(pizzas.price * orders_details.quantity),2) as Total_Revenue 
+from orders_details 
+join pizzas on pizzas.pizza_id = orders_details.pizza_id;
+```
+![lapizza q2](https://github.com/Rutvik1429/SQL_Project/blob/main/Lapinoz_pizzas_Analysis/Output%20images/lapizza%20q2.png)
+
+## Q3. Identify the highest-priced pizza
+```sql
+select pizza_types.name, pizzas.price as Highest_Price 
+from pizzas
+join pizza_types on pizza_types.pizza_type_id = pizzas.pizza_type_id 
+order by highest_price desc 
+limit 1;
+```
+![lapizza q3](https://github.com/Rutvik1429/SQL_Project/blob/main/Lapinoz_pizzas_Analysis/Output%20images/lapizza%20q3.png)
+
+## Q4. Identify the most common pizza size ordered
+```sql
+select pizzas.size , sum(orders_details.quantity) as Total_orders 
+from orders_details 
+join pizzas on pizzas.pizza_id = orders_details.pizza_id 
+group by pizzas.size 
+order by total_orders desc 
+limit 1;
+```
+![lapizza q4](https://github.com/Rutvik1429/SQL_Project/blob/main/Lapinoz_pizzas_Analysis/Output%20images/lapizza%20q4.png)
+
+## Q5. List the top 5 most ordered pizza types with quantities
+```sql
+select pizzas.pizza_type_id, sum(orders_details.quantity) as total_pizza 
+from pizzas
+join orders_details on orders_details.pizza_id = pizzas.pizza_id 
+group by pizzas.pizza_type_id 
+order by total_pizza desc 
+limit 5;
+```
+![lapizza q5](https://github.com/Rutvik1429/SQL_Project/blob/main/Lapinoz_pizzas_Analysis/Output%20images/lapizza%20q5.png)
+
+## Q6. Total quantity of each pizza category ordered
+```sql
+select pizza_types.category , sum(orders_details.quantity) as total_quantity 
+from pizza_types
+join pizzas on pizzas.pizza_type_id = pizza_types.pizza_type_id
+join orders_details on orders_details.pizza_id = pizzas.pizza_id
+group by pizza_types.category 
+order by total_quantity desc;
+```
+![lapizza q6](https://github.com/Rutvik1429/SQL_Project/blob/main/Lapinoz_pizzas_Analysis/Output%20images/lapizza%20q6.png)
+
+## Q7. Distribution of orders by hour of the day
+```sql
+select hour(order_time) as Hour, count(*) as Number_of_orders  
+from orders
+group by Hour;
+```
+![lapizza q7](https://github.com/Rutvik1429/SQL_Project/blob/main/Lapinoz_pizzas_Analysis/Output%20images/lapizza%20q7.png)
+
+## Q8. Category-wise distribution of pizzas
+```sql
+select pizza_types.category , count(pizzas.pizza_id) as total_pizzas 
+from pizza_types
+join pizzas on pizzas.pizza_type_id = pizza_types.pizza_type_id
+group by pizza_types.category;
+```
+![lapizza q8](https://github.com/Rutvik1429/SQL_Project/blob/main/Lapinoz_pizzas_Analysis/Output%20images/lapizza%20q8.png)
+
+## Q9. Average number of pizzas ordered per day
+```sql
+with average as (
+    select orders.order_date, sum(orders_details.quantity) as total_number  
+    from orders
+    join orders_details on orders_details.order_id = orders.order_id
+    group by orders.order_date
+)
+select round(avg(total_number),0) as avereg_order_per_day 
+from average;
+```
+![lapizza q9](https://github.com/Rutvik1429/SQL_Project/blob/main/Lapinoz_pizzas_Analysis/Output%20images/lapizza%20q9.png)
+
+## Q10. Top 3 most ordered pizza types based on revenue
+```sql
+select pizzas.pizza_type_id , sum(pizzas.price * orders_details.quantity) as Revenue 
+from pizzas
+join orders_details on orders_details.pizza_id = pizzas.pizza_id 
+group by pizzas.pizza_type_id 
+order by Revenue desc 
+limit 3;
+```
+![lapizza q10](https://github.com/Rutvik1429/SQL_Project/blob/main/Lapinoz_pizzas_Analysis/Output%20images/lapizza%20q10.png)
+
+## Q11. Percentage contribution of each category to total revenue
+```sql
+select pizza_types.category ,
+round((sum(pizzas.price*orders_details.quantity)/
+       (select sum(pizzas.price * orders_details.quantity) 
+        from orders_details join pizzas on pizzas.pizza_id = orders_details.pizza_id)) * 100,2) as revenue 
+from pizza_types	
+join pizzas on pizzas.pizza_type_id = pizza_types.pizza_type_id
+join orders_details on orders_details.pizza_id = pizzas.pizza_id
+group by pizza_types.category;
+```
+![lapizza q11](https://github.com/Rutvik1429/SQL_Project/blob/main/Lapinoz_pizzas_Analysis/Output%20images/lapizza%20q11.png)
+
+## Q12. Cumulative revenue generated over time
+```sql
+select order_date , sum(revenue) over(order by order_date) as cum_revenue 
+from (
+    select orders.order_date , sum(pizzas.price*orders_details.quantity) as revenue 
+    from orders
+    join orders_details on orders.order_id = orders_details.order_id
+    join pizzas on pizzas.pizza_id = orders_details.pizza_id
+    group by orders.order_date
+) as sales;
+```
+![lapizza q12](https://github.com/Rutvik1429/SQL_Project/blob/main/Lapinoz_pizzas_Analysis/Output%20images/lapizza%20q12.png)
+
+## Q13. Top 3 most ordered pizza types by revenue for each category
+```sql
+with revenue_wise_category as (
+    select pizza_types.pizza_type_id, pizza_types.category,
+           sum(pizzas.price*orders_details.quantity) as revenue,
+           dense_rank() over(partition by pizza_types.category 
+                             order by sum(pizzas.price*orders_details.quantity) desc) as rank_of_value   
+    from orders_details
+    join pizzas on pizzas.pizza_id = orders_details.pizza_id
+    join pizza_types on pizza_types.pizza_type_id = pizzas.pizza_type_id
+    group by pizza_types.category, pizza_types.pizza_type_id
+)  
+select pizza_type_id , category, revenue, rank_of_value  
+from revenue_wise_category
+where rank_of_value <= 3;
+```
+![lapizza q13](https://github.com/Rutvik1429/SQL_Project/blob/main/Lapinoz_pizzas_Analysis/Output%20images/lapizza%20q13.png)
+
+---
+---
+
