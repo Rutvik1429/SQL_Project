@@ -396,3 +396,227 @@ where rank_of_value <= 3;
 ---
 ---
 
+# 📚 Books Store Analysis
+![book image](https://github.com/Rutvik1429/SQL_Project/blob/main/Book_Store/book%20image.jpg)
+
+## ✅ Project Overview
+This project is an analysis of a books store database using SQL. It involves exploring data related to books, customers, and orders to uncover insights into customer behavior, sales patterns, inventory levels, and more. The analysis demonstrates the use of various SQL functions and queries to solve real-world business problem
+
+## 🎯 Objective
+- Analyze customer preferences and ordering patterns.
+- Identify popular books, genres, and high-spending customers.
+- Calculate total revenue and inventory status.
+- Assist in making data-driven decisions for inventory and marketing.
+- Showcase SQL functionalities such as joins, aggregation, filtering, and window functions.
+
+
+## 📂 Dataset Description
+
+### Books Table
+| Column        | Description                     |
+|---------------|---------------------------------|
+| book_id       | Unique identifier for each book |
+| title         | Title of the book               |
+| author        | Author of the book              |
+| genre         | Genre of the book               |
+| published_year| Year of publication             |
+| price         | Price of the book               |
+| stock         | Available stock quantity       |
+
+### Customers Table
+| Column    | Description                   |
+|-----------|-------------------------------|
+| customer_id| Unique identifier for customer |
+| name      | Name of the customer          |
+| email     | Email address                 |
+| phone     | Phone number                  |
+| city      | City                          |
+| country   | Country                       |
+
+### Orders Table
+| Column      | Description                    |
+|-------------|--------------------------------|
+| order_id    | Unique identifier for each order |
+| customer_id | Customer placing the order     |
+| book_id     | Book being ordered            |
+| order_date  | Date of order                 |
+| quantity    | Number of books ordered      |
+| total_amount| Total cost of the order      |
+
+
+## 📊 Insights Derived
+
+✔ **Popular Genres:** Fiction and Fantasy books are most frequently ordered.
+
+✔ **Best Selling Book:** Helps in focusing on high-demand books for better inventory planning.
+
+✔ **High-Spending Customers:** Customers who spend over $30 or place multiple orders can be targeted for special offers.
+
+✔ **Revenue Insights:** The total revenue helps in tracking business performance.
+
+✔ **Inventory Control:** Knowing which books have the lowest stock helps in replenishing stock on time.
+
+✔ **Author Performance:** Authors whose books are ordered frequently can be prioritized.
+
+✔ **Regional Analysis:** Insights on cities with high customer spending can assist in localized marketing.
+
+
+## 🚀 Tools & Techniques Used
+
+- SQL commands: `SELECT`, `JOIN`, `GROUP BY`, `HAVING`, `ORDER BY`, `WHERE`.
+- Aggregation functions: `SUM()`, `MAX()`, `MIN()`, `COUNT()`, `AVG()`.
+- Window functions like `AVG() OVER()`.
+- Filtering with date ranges.
+- Handling nulls using `COALESCE()`.
+
+## 🗂️ SQL Queries & Solutions
+
+## 1 – Retrieve all books in the "Fiction" genre
+```sql
+SELECT * FROM books WHERE genre = 'Fiction';
+```
+![book q1](https://github.com/Rutvik1429/SQL_Project/blob/main/Book_Store/Output%20images/book%20q1.png)
+
+## 2 – Find books published after the year 1950
+```sql
+SELECT * FROM books WHERE published_year > 1950;
+```
+![book q2](https://github.com/Rutvik1429/SQL_Project/blob/main/Book_Store/Output%20images/book%20q2.png)
+
+## 3 – List all customers from Canada
+```sql
+SELECT * FROM customers WHERE city = 'Canada';
+```
+![book q3](https://github.com/Rutvik1429/SQL_Project/blob/main/Book_Store/Output%20images/book%20q3.png)
+
+## 4 – Show orders placed in November 2023
+```sql
+SELECT * FROM orders WHERE order_date BETWEEN '2023-11-01' AND '2023-11-30';
+```
+![book q4](https://github.com/Rutvik1429/SQL_Project/blob/main/Book_Store/Output%20images/book%20q4.png)
+
+## 5 – Retrieve the total stock of books available
+```sql
+SELECT SUM(stock) AS total_number FROM books;
+```
+![book q5](https://github.com/Rutvik1429/SQL_Project/blob/main/Book_Store/Output%20images/book%20q5.png)
+
+## 6 – Find details of the most expensive book
+```sql
+SELECT *, (SELECT MAX(price) FROM books) FROM books ORDER BY price DESC LIMIT 1;
+```
+![book q6](https://github.com/Rutvik1429/SQL_Project/blob/main/Book_Store/Output%20images/book%20q6.png)
+
+## 7 – Show all customers who ordered more than 1 quantity of a book
+```sql
+SELECT customers.name, orders.quantity FROM customers
+JOIN orders ON orders.customer_id = customers.customer_id
+WHERE orders.quantity > 1;
+```
+![book q7](https://github.com/Rutvik1429/SQL_Project/blob/main/Book_Store/Output%20images/book%20q7.png)
+
+## 8 – Retrieve all orders where the total amount exceeds $20
+```sql
+SELECT * FROM orders WHERE total_amount > 20;
+```
+![book q8](https://github.com/Rutvik1429/SQL_Project/blob/main/Book_Store/Output%20images/book%20q8.png)
+
+## 9 – List all genres available in the books table
+```sql
+SELECT DISTINCT genre FROM books;
+```
+![book q9](https://github.com/Rutvik1429/SQL_Project/blob/main/Book_Store/Output%20images/book%20q9.png)
+
+## 10 – Find the book with the lowest stock
+```sql
+SELECT *, (SELECT MIN(stock) FROM books) AS lowest_stock FROM books ORDER BY stock LIMIT 1;
+```
+![book q10](https://github.com/Rutvik1429/SQL_Project/blob/main/Book_Store/Output%20images/book%20q10.png)
+
+## 11 – Calculate the total revenue generated from all orders
+```sql
+SELECT SUM(total_amount) AS total_revenue FROM orders;
+```
+![book q11](https://github.com/Rutvik1429/SQL_Project/blob/main/Book_Store/Output%20images/book%20q11.png)
+
+## 12 – Retrieve the total number of books sold for each genre
+```sql
+SELECT books.genre, SUM(orders.quantity) AS total_number FROM books
+JOIN orders ON orders.book_id = books.book_id
+GROUP BY books.genre;
+```
+![book q12](https://github.com/Rutvik1429/SQL_Project/blob/main/Book_Store/Output%20images/book%20q12.png)
+
+## 13 – Find the average price of books in the "Fantasy" genre
+```sql
+SELECT *, AVG(price) OVER (PARTITION BY genre) AS average FROM books WHERE genre = 'Fantasy';
+```
+![book q13](https://github.com/Rutvik1429/SQL_Project/blob/main/Book_Store/Output%20images/book%20q13.png)
+
+## 14 – List customers who have placed at least 2 orders
+```sql
+SELECT customers.customer_id, customers.name, COUNT(orders.order_id) AS total_orders FROM customers
+JOIN orders ON orders.customer_id = customers.customer_id
+GROUP BY customers.customer_id, customers.name
+HAVING COUNT(orders.order_id) >= 2;
+```
+![book q14](https://github.com/Rutvik1429/SQL_Project/blob/main/Book_Store/Output%20images/book%20q14.png)
+
+## 15 – Find the most frequently ordered book
+```sql
+SELECT books.title, COUNT(orders.order_id) AS Most_frequently FROM books
+JOIN orders ON orders.book_id = books.book_id
+GROUP BY books.title
+ORDER BY Most_frequently DESC
+LIMIT 1;
+```
+![book q15](https://github.com/Rutvik1429/SQL_Project/blob/main/Book_Store/Output%20images/book%20q15.png)
+
+## 16 – Show the top 3 most expensive books of 'Fantasy' genre
+```sql
+SELECT * FROM books WHERE genre = 'Fantasy' ORDER BY price DESC LIMIT 3;
+```
+![book q16](https://github.com/Rutvik1429/SQL_Project/blob/main/Book_Store/Output%20images/book%20q16.png)
+
+## 17 – Retrieve the total quantity of books sold by each author
+```sql
+SELECT books.author, SUM(orders.quantity) AS total_quantity FROM books
+JOIN orders ON orders.book_id = books.book_id
+GROUP BY books.author;
+```
+![book q17](https://github.com/Rutvik1429/SQL_Project/blob/main/Book_Store/Output%20images/book%20q17.png)
+
+## 18 – List the cities where customers who spent over $30 are located
+```sql
+SELECT DISTINCT customers.city, orders.total_amount FROM customers
+JOIN orders ON orders.customer_id = customers.customer_id
+WHERE total_amount > 30;
+```
+![book q18](https://github.com/Rutvik1429/SQL_Project/blob/main/Book_Store/Output%20images/book%20q18.png)
+
+## 19 – Find the customer who spent the most on orders
+```sql
+SELECT customers.name, SUM(orders.total_amount) AS sum_of_amount FROM customers
+JOIN orders ON orders.customer_id = customers.customer_id
+GROUP BY customers.name
+ORDER BY sum_of_amount DESC
+LIMIT 1;
+```
+![book q19](https://github.com/Rutvik1429/SQL_Project/blob/main/Book_Store/Output%20images/book%20q19.png)
+
+## 20 – Calculate the stock remaining after fulfilling all orders
+```sql
+SELECT books.book_id, books.title, books.stock, COALESCE(SUM(orders.quantity), 0) AS order_quantity,
+       books.stock - COALESCE(SUM(orders.quantity), 0) AS fulfilling_quantity
+FROM books
+LEFT JOIN orders ON orders.book_id = books.book_id
+GROUP BY books.book_id;
+```
+![book q20](https://github.com/Rutvik1429/SQL_Project/blob/main/Book_Store/Output%20images/book%20q20.png)
+
+## 📌 Conclusion
+
+This Books Store Analysis demonstrates how SQL can be used to answer critical business questions. The insights from this analysis can help the store optimize its operations, enhance customer experience, and improve profitability.
+
+---
+---
