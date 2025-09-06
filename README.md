@@ -397,7 +397,7 @@ where rank_of_value <= 3;
 ---
 
 # 📚 Books Store Analysis
-![book image](https://github.com/Rutvik1429/SQL_Project/blob/main/Book_Store/book%20image.jpg)
+![book image](https://github.com/Rutvik1429/SQL_Project/blob/main/Book_Store_Analysis/book%20image.jpg)
 
 ## ✅ Project Overview
 This project is an analysis of a books store database using SQL. It involves exploring data related to books, customers, and orders to uncover insights into customer behavior, sales patterns, inventory levels, and more. The analysis demonstrates the use of various SQL functions and queries to solve real-world business problem
@@ -475,13 +475,13 @@ This project is an analysis of a books store database using SQL. It involves exp
 ```sql
 SELECT * FROM books WHERE genre = 'Fiction';
 ```
-![book q1](https://github.com/Rutvik1429/SQL_Project/blob/main/Book_Store/Output%20images/book%20q1.png)
+![book q1](https://github.com/Rutvik1429/SQL_Project/blob/main/Book_Store_Analysis/Output%20images/book%20q1.png)
 
 ## 2 – Find books published after the year 1950
 ```sql
 SELECT * FROM books WHERE published_year > 1950;
 ```
-![book q2](https://github.com/Rutvik1429/SQL_Project/blob/main/Book_Store/Output%20images/book%20q2.png)
+![book q2](https://github.com/Rutvik1429/SQL_Project/blob/main/Book_Store_Analysis/Output%20images/book%20q2.png)
 
 ## 3 – List all customers from Canada
 ```sql
